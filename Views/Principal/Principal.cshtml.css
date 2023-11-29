@@ -1,0 +1,132 @@
+/*================================Datos unicos de Principal====================================*/
+
+main.Principal {
+    padding: 20px;
+    flex-grow: 1;
+    margin-bottom: 50px;
+}
+
+
+.container {
+    display: flex;
+}
+
+
+
+/* Sidebar */
+.sidebar {
+    width: 10%;
+    background-color: #6aceec;
+    color: #fff;
+    padding: 20px;
+    border: 3px solid #295c90;
+    top: 100px;
+
+    overflow: auto; 
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 10%; 
+}
+
+@media screen and (max-width: 1200px){
+    .sidebar{
+        width: 15%;
+        height: 45%;
+        top: 140px; 
+       } 
+}
+
+@media screen and (max-width: 800px){
+    .sidebar{
+        width: 23%;
+        height: 45%;
+        top: 140px; 
+       } 
+}
+
+@media screen and (max-width: 600px){
+   .sidebar{
+    width: 37%;
+    height: 45%;
+    top: 140px; 
+   } 
+}
+
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    min-height: calc(100vh - 90px);
+}
+
+.sidebar ul li {
+    margin-bottom: 10px ;
+    text-align: center;
+    border: 1px solid #fffff1;
+    border-radius: 5px; 
+    padding: 5px;
+    
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar li:hover,a:hover {
+    background-color: #4788c7; 
+}
+
+/* Contenido */
+.content {
+    flex-grow: 1; 
+    padding: 20px;
+    
+}
+
+/* texto */
+
+section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.design{
+    display: none;
+}
+
+
+/*------------------------------tabla de notas----------------------------------*/
+/*tabla*/
+table{
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px #0000001a;
+}
+
+table, th, td{  
+    border: 1px solid black;
+}
+
+/*cuadros de tablas*/
+th, td{
+    padding: 10px;
+    text-align: center;
+}
+
+/*centrado de encabezado*/
+th{
+    background-color: #2199e9;
+}
+
+tbody{
+    display: block;
+    height: 300px; /* Ajusta la altura según tus necesidades */
+    overflow-y: scroll;
+}

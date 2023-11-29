@@ -1,0 +1,132 @@
+/*================================Datos unicos de Principal====================================*/
+
+main.Principal[b-d363q9wx8i] {
+    padding: 20px;
+    flex-grow: 1;
+    margin-bottom: 50px;
+}
+
+
+.container[b-d363q9wx8i] {
+    display: flex;
+}
+
+
+
+/* Sidebar */
+.sidebar[b-d363q9wx8i] {
+    width: 10%;
+    background-color: #6aceec;
+    color: #fff;
+    padding: 20px;
+    border: 3px solid #295c90;
+    top: 100px;
+
+    overflow: auto; 
+}
+
+.sidebar[b-d363q9wx8i]::-webkit-scrollbar {
+    width: 10%; 
+}
+
+@media screen and (max-width: 1200px){
+    .sidebar[b-d363q9wx8i]{
+        width: 15%;
+        height: 45%;
+        top: 140px; 
+       } 
+}
+
+@media screen and (max-width: 800px){
+    .sidebar[b-d363q9wx8i]{
+        width: 23%;
+        height: 45%;
+        top: 140px; 
+       } 
+}
+
+@media screen and (max-width: 600px){
+   .sidebar[b-d363q9wx8i]{
+    width: 37%;
+    height: 45%;
+    top: 140px; 
+   } 
+}
+
+
+.sidebar ul[b-d363q9wx8i] {
+    list-style: none;
+    padding: 0;
+    min-height: calc(100vh - 90px);
+}
+
+.sidebar ul li[b-d363q9wx8i] {
+    margin-bottom: 10px ;
+    text-align: center;
+    border: 1px solid #fffff1;
+    border-radius: 5px; 
+    padding: 5px;
+    
+}
+
+.sidebar a[b-d363q9wx8i] {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar li:hover[b-d363q9wx8i],a:hover[b-d363q9wx8i] {
+    background-color: #4788c7; 
+}
+
+/* Contenido */
+.content[b-d363q9wx8i] {
+    flex-grow: 1; 
+    padding: 20px;
+    
+}
+
+/* texto */
+
+section[b-d363q9wx8i] {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.design[b-d363q9wx8i]{
+    display: none;
+}
+
+
+/*------------------------------tabla de notas----------------------------------*/
+/*tabla*/
+table[b-d363q9wx8i]{
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px #0000001a;
+}
+
+table[b-d363q9wx8i], th[b-d363q9wx8i], td[b-d363q9wx8i]{  
+    border: 1px solid black;
+}
+
+/*cuadros de tablas*/
+th[b-d363q9wx8i], td[b-d363q9wx8i]{
+    padding: 10px;
+    text-align: center;
+}
+
+/*centrado de encabezado*/
+th[b-d363q9wx8i]{
+    background-color: #2199e9;
+}
+
+tbody[b-d363q9wx8i]{
+    display: block;
+    height: 300px; /* Ajusta la altura según tus necesidades */
+    overflow-y: scroll;
+}

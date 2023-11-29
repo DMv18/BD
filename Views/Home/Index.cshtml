@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<body>
+    <article>
+        <h1></h1>
+        <h1></h1>
+        <button onclick="irPrincipal()">Ingresar</button>
+    </article>
+
+    <script>
+        function irPrincipal() {
+            window.location.href = '/Principal/Index';
+        }
+    </script>
+</body>
+
+<style>
+      article {
+            
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff; /* Color azul de Bootstrap */
+            color: #fff; /* Texto blanco */
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Color azul oscuro al pasar el ratón */
+        }
+    </style>

@@ -1,0 +1,33 @@
+@model List<Nota>;
+
+    <table>
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Edad
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var nota in Model)
+        {
+            <tr>
+                <td>
+                    @nota.id
+                </td>
+                <td>
+                    @nota.nombre
+                </td>
+                <td>
+                    @nota.edad
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

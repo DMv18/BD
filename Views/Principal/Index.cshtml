@@ -1,0 +1,184 @@
+@model List<Usuario>;
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITMNAM</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="bundle.js"></script>
+
+    <script src="https://kit.fontawesome.com/187c4491b9.js" crossorigin="anonymous"></script>
+    
+    
+</head>
+
+<body>
+    
+    
+    <main class="Inicio">
+
+        
+        <div class="wrap">
+            <nav>
+                <ul class="tabs">
+                    <li><a href="#tab1"><span class=""></span><i class="fa-solid fa-user-large"></i><span class="tab-text">Estudiante</span></a></li>
+
+                    <li><a href="#tab2"><span class=""></span><i class="fa-solid fa-user-graduate"></i><span class="tab-text">Profesor</span></a></li>
+                    
+                    <li><a href="#tab3"><span class=""><i class="fa-solid fa-briefcase"></i></span><span class="tab-text">Autoridades</span></a></li>
+                </ul>
+            </nav>
+            
+
+            <div class="secciones">
+                <article id="tab1">
+                    <h1>Estudiante</h1>
+                </article>
+
+                <article id="tab2">
+                    <h1>Profesor</h1>
+                </article>
+                
+
+                <article id="tab3">
+                    <h1>Autoridades</h1> 
+                </article>
+
+                <article id="tab4">
+                    <from action="/Principal/Index" method="GET">
+                        <span class="user-icon"><i class="fas fa-user"></i></span>
+                        <input id="usuario" type="int" placeholder="Ingresa tu Usuario" class="input-grande">
+                        <h1></h1>
+                        <i class="fa-solid fa-envelope"></i>
+                        <input id="correo" type="text" placeholder="Ingresa tu correo" class="input-grande">
+                        <h1></h1>
+                        <i class="fa-solid fa-lock"></i>
+                        <input id="contrasena" type="int" placeholder="Ingresa tu contraseña" class="input-grande">
+                        <i class="fa-solid fa-eye"></i>
+                        <h1></h1>
+                    </from>
+                </article>
+
+                <button onclick="enviarFormulario()" class="buttonIngresar">Ingresar</button>  
+                
+
+                <a class="olvido-contrasena" href="Home/Privacy">Olvidó su contraseña</a>
+            </div>
+        </div>
+
+        <table>
+    <thead>
+        <tr>
+            <th>
+                Usuario
+            </th>
+            <th>
+                Correo
+            </th>
+            <th>
+                Contrasena
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>
+                    @usuario.usuario
+                </td>
+                <td>
+                    @usuario.correo
+                </td>
+                <td>
+                    @usuario.contrasena
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </main>
+    
+    
+</body>
+
+
+
+
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var tabs = document.querySelectorAll('ul.tabs li a');
+            var sections = document.querySelectorAll('.secciones article');
+
+            sections.forEach(function (section, index) {
+                if (index !== 0) {
+                    section.style.display = 'none';
+                    document.getElementById('tab4').style.display = 'block';
+                }
+            });
+
+            tabs.forEach(function (tab, index) {
+                tab.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    tabs.forEach(function (t) {
+                        t.classList.remove('active');
+                    });
+
+                    this.classList.add('active');
+
+                    sections.forEach(function (section) {
+                        section.style.display = 'none';
+                    });
+
+                    var activeTab = this.getAttribute('href');
+                    document.querySelector(activeTab).style.display = 'block';
+
+                    // Mostrar siempre tab4 debajo del tab seleccionado
+                    document.getElementById('tab4').style.display = 'block';
+                });
+            });
+        });
+
+        
+
+        function irPrincipal() {
+            window.location.href = '/principal/Principal';
+        }
+
+
+
+       
+
+    </script>
+
+    <script>
+        function enviarFormulario() {
+            var usuarioInput = document.getElementById('usuario').value;
+            var correoInput = document.getElementById('correo').value;
+            var contrasenaInput = document.getElementById('contrasena').value;
+
+            // Enviar datos al servidor mediante AJAX
+            $.ajax({
+                type: "POST",
+                url: "/Principal/VerificarCredenciales", // Cambia la ruta según tu configuración
+                data: { usuario: usuarioInput, correo: correoInput, contrasena: contrasenaInput },
+                success: function (response) {
+                    if (response.success) {
+                        irPrincipal();
+                    } else {
+                        alert('Credenciales incorrectas. Inténtalo de nuevo.');
+                    }
+                },
+                error: function () {
+                    alert('Error al verificar las credenciales.');
+                }
+            });
+        }
+    </script>
+}
