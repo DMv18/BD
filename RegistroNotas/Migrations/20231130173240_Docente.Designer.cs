@@ -12,8 +12,8 @@ using RegistroNotas.Data;
 namespace RegistroNotas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231130044254_CursoMaterias")]
-    partial class CursoMaterias
+    [Migration("20231130173240_Docente")]
+    partial class Docente
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,55 +24,6 @@ namespace RegistroNotas.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CursoMaterias", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CursoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CursoMateriasNotasId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
-
-                    b.HasIndex("CursoMateriasNotasId");
-
-                    b.ToTable("CursoMaterias");
-                });
-
-            modelBuilder.Entity("CursoMateriasNotas", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CursoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EstudianteId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Nota")
-                        .HasColumnType("decimal(4,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
-
-                    b.HasIndex("EstudianteId");
-
-                    b.ToTable("CursoMateriasNotas");
-                });
 
             modelBuilder.Entity("Docente", b =>
                 {
@@ -109,47 +60,6 @@ namespace RegistroNotas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Docente");
-                });
-
-            modelBuilder.Entity("Estudiante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("CursoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Primer_Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Primer_Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Segundo_Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Segundo_Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
-
-                    b.ToTable("Estudiantes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -402,9 +312,6 @@ namespace RegistroNotas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DocenteId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Grado")
                         .HasColumnType("int");
 
@@ -416,42 +323,11 @@ namespace RegistroNotas.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DocenteId");
-
                     b.HasIndex("ModalidadId");
 
                     b.HasIndex("PeriodoId");
 
                     b.ToTable("Cursos");
-                });
-
-            modelBuilder.Entity("CursoMaterias", b =>
-                {
-                    b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
-                        .WithMany("CursoMaterias")
-                        .HasForeignKey("CursoId");
-
-                    b.HasOne("CursoMateriasNotas", null)
-                        .WithMany("CursoMaterias")
-                        .HasForeignKey("CursoMateriasNotasId");
-                });
-
-            modelBuilder.Entity("CursoMateriasNotas", b =>
-                {
-                    b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
-                        .WithMany("CursoMateriasNotas")
-                        .HasForeignKey("CursoId");
-
-                    b.HasOne("Estudiante", null)
-                        .WithMany("CursoMateriasNotas")
-                        .HasForeignKey("EstudianteId");
-                });
-
-            modelBuilder.Entity("Estudiante", b =>
-                {
-                    b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
-                        .WithMany("Estudiantes")
-                        .HasForeignKey("CursoId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -507,12 +383,6 @@ namespace RegistroNotas.Migrations
 
             modelBuilder.Entity("RegistroNotas.Models.Cursos.Curso", b =>
                 {
-                    b.HasOne("Docente", "Docente")
-                        .WithMany()
-                        .HasForeignKey("DocenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("RegistroNotas.Models.Catalogos.Modalidad", "Modalidad")
                         .WithMany()
                         .HasForeignKey("ModalidadId")
@@ -525,30 +395,9 @@ namespace RegistroNotas.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Docente");
-
                     b.Navigation("Modalidad");
 
                     b.Navigation("Periodo");
-                });
-
-            modelBuilder.Entity("CursoMateriasNotas", b =>
-                {
-                    b.Navigation("CursoMaterias");
-                });
-
-            modelBuilder.Entity("Estudiante", b =>
-                {
-                    b.Navigation("CursoMateriasNotas");
-                });
-
-            modelBuilder.Entity("RegistroNotas.Models.Cursos.Curso", b =>
-                {
-                    b.Navigation("CursoMaterias");
-
-                    b.Navigation("CursoMateriasNotas");
-
-                    b.Navigation("Estudiantes");
                 });
 #pragma warning restore 612, 618
         }

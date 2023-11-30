@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using RegistroNotas.Migrations;
+
 
 [Table("Estudiantes")]
 
@@ -24,7 +24,6 @@ public class Estudiante{
     [MaxLength(50)]
     public string Segundo_Apellido { get; set; } = null!;
     public bool Activo { get; set; }
-    public required List<CursoMateriasNotas> CursoMateriasNotas { get; set; }
+    public List<CursoMateriasNotas> CursoMateriasNotas { get; set; } = null!;
     
-
 }

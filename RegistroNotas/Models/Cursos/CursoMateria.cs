@@ -7,5 +7,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class CursoMaterias{
     [Key]
     public int Id { get; set; }
-    
+    public  List<CursoMateriasNotas> CursoMateriasNotas { get; set; }= null!;
+    public CatalogoMateria CatalogoMateria { get; set; } = null!;
 }

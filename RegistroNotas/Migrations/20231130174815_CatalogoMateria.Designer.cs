@@ -12,8 +12,8 @@ using RegistroNotas.Data;
 namespace RegistroNotas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231130043542_CursoMateriasNotas")]
-    partial class CursoMateriasNotas
+    [Migration("20231130174815_CatalogoMateria")]
+    partial class CatalogoMateria
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,87 @@ namespace RegistroNotas.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CatalogoCurricular", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("CatalogoDesarrolloId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CatalogoDesarrolloId");
+
+                    b.ToTable("CatalogoCurricular");
+                });
+
+            modelBuilder.Entity("CatalogoDesarrollo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CatalogoDesarrollo");
+                });
+
+            modelBuilder.Entity("CatalogoMateria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CatalogoCurricularId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("DocenteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Parciales")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CatalogoCurricularId");
+
+                    b.HasIndex("DocenteId");
+
+                    b.ToTable("CatalogoMateria");
+                });
 
             modelBuilder.Entity("CursoMateriasNotas", b =>
                 {
@@ -402,6 +483,32 @@ namespace RegistroNotas.Migrations
                     b.ToTable("Cursos");
                 });
 
+            modelBuilder.Entity("CatalogoCurricular", b =>
+                {
+                    b.HasOne("CatalogoDesarrollo", null)
+                        .WithMany("CatalogoCurricular")
+                        .HasForeignKey("CatalogoDesarrolloId");
+                });
+
+            modelBuilder.Entity("CatalogoMateria", b =>
+                {
+                    b.HasOne("CatalogoCurricular", "CatalogoCurricular")
+                        .WithMany()
+                        .HasForeignKey("CatalogoCurricularId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Docente", "Docente")
+                        .WithMany()
+                        .HasForeignKey("DocenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CatalogoCurricular");
+
+                    b.Navigation("Docente");
+                });
+
             modelBuilder.Entity("CursoMateriasNotas", b =>
                 {
                     b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
@@ -496,6 +603,11 @@ namespace RegistroNotas.Migrations
                     b.Navigation("Modalidad");
 
                     b.Navigation("Periodo");
+                });
+
+            modelBuilder.Entity("CatalogoDesarrollo", b =>
+                {
+                    b.Navigation("CatalogoCurricular");
                 });
 
             modelBuilder.Entity("Estudiante", b =>

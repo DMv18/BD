@@ -8,10 +8,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class CursoMateriasNotas{
     [Key]
     public int Id { get; set; }
+
     [Required]
     [Column(TypeName = "decimal(4,2)")]
     public decimal Nota { get; set; }
-
-     
- 
+   
+    
 }

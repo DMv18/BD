@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
+
 [Table("CatalogoMateria")]
 
 public class CatalogoMateria{
@@ -16,6 +17,7 @@ public class CatalogoMateria{
     
     public Docente Docente { get; set; }= null!;
     public CatalogoCurricular CatalogoCurricular { get; set; }= null!;
-
+    
+    
     
 }

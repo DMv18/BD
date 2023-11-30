@@ -12,7 +12,6 @@ public class CatalogoCurricular{
     [MaxLength(50)]
     public string Descripcion { get; set; } = null!;
     public bool Activo { get; set; }
-   
- 
+    
    
 }

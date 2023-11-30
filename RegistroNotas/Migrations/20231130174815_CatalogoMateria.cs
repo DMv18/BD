@@ -10,18 +10,6 @@ namespace RegistroNotas.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CursoMaterias_CursoMateriasNotas_CursoMateriasNotasId",
-                table: "CursoMaterias");
-
-            migrationBuilder.DropIndex(
-                name: "IX_CursoMaterias_CursoMateriasNotasId",
-                table: "CursoMaterias");
-
-            migrationBuilder.DropColumn(
-                name: "CursoMateriasNotasId",
-                table: "CursoMaterias");
-
             migrationBuilder.CreateTable(
                 name: "CatalogoMateria",
                 columns: table => new
@@ -32,16 +20,17 @@ namespace RegistroNotas.Migrations
                     Activo = table.Column<bool>(type: "bit", nullable: false),
                     Parciales = table.Column<int>(type: "int", nullable: false),
                     DocenteId = table.Column<int>(type: "int", nullable: false),
-                    CursoMateriasId = table.Column<int>(type: "int", nullable: true)
+                    CatalogoCurricularId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CatalogoMateria", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CatalogoMateria_CursoMaterias_CursoMateriasId",
-                        column: x => x.CursoMateriasId,
-                        principalTable: "CursoMaterias",
-                        principalColumn: "Id");
+                        name: "FK_CatalogoMateria_CatalogoCurricular_CatalogoCurricularId",
+                        column: x => x.CatalogoCurricularId,
+                        principalTable: "CatalogoCurricular",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CatalogoMateria_Docente_DocenteId",
                         column: x => x.DocenteId,
@@ -51,9 +40,9 @@ namespace RegistroNotas.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CatalogoMateria_CursoMateriasId",
+                name: "IX_CatalogoMateria_CatalogoCurricularId",
                 table: "CatalogoMateria",
-                column: "CursoMateriasId");
+                column: "CatalogoCurricularId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CatalogoMateria_DocenteId",
@@ -66,24 +55,6 @@ namespace RegistroNotas.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CatalogoMateria");
-
-            migrationBuilder.AddColumn<int>(
-                name: "CursoMateriasNotasId",
-                table: "CursoMaterias",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CursoMaterias_CursoMateriasNotasId",
-                table: "CursoMaterias",
-                column: "CursoMateriasNotasId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_CursoMaterias_CursoMateriasNotas_CursoMateriasNotasId",
-                table: "CursoMaterias",
-                column: "CursoMateriasNotasId",
-                principalTable: "CursoMateriasNotas",
-                principalColumn: "Id");
         }
     }
 }

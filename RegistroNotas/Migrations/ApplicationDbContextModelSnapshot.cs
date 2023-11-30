@@ -80,6 +80,9 @@ namespace RegistroNotas.Migrations
                     b.Property<bool>("Activo")
                         .HasColumnType("bit");
 
+                    b.Property<int>("CatalogoCurricularId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -92,6 +95,8 @@ namespace RegistroNotas.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CatalogoCurricularId");
 
                     b.HasIndex("DocenteId");
 
@@ -106,10 +111,15 @@ namespace RegistroNotas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CatalogoMateriaId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CursoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CatalogoMateriaId");
 
                     b.HasIndex("CursoId");
 
@@ -127,6 +137,9 @@ namespace RegistroNotas.Migrations
                     b.Property<int?>("CursoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CursoMateriasId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EstudianteId")
                         .HasColumnType("int");
 
@@ -136,6 +149,8 @@ namespace RegistroNotas.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CursoId");
+
+                    b.HasIndex("CursoMateriasId");
 
                     b.HasIndex("EstudianteId");
 
@@ -502,20 +517,36 @@ namespace RegistroNotas.Migrations
 
             modelBuilder.Entity("CatalogoMateria", b =>
                 {
+                    b.HasOne("CatalogoCurricular", "CatalogoCurricular")
+                        .WithMany()
+                        .HasForeignKey("CatalogoCurricularId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Docente", "Docente")
                         .WithMany()
                         .HasForeignKey("DocenteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("CatalogoCurricular");
+
                     b.Navigation("Docente");
                 });
 
             modelBuilder.Entity("CursoMaterias", b =>
                 {
+                    b.HasOne("CatalogoMateria", "CatalogoMateria")
+                        .WithMany()
+                        .HasForeignKey("CatalogoMateriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
                         .WithMany("CursoMaterias")
                         .HasForeignKey("CursoId");
+
+                    b.Navigation("CatalogoMateria");
                 });
 
             modelBuilder.Entity("CursoMateriasNotas", b =>
@@ -523,6 +554,10 @@ namespace RegistroNotas.Migrations
                     b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
                         .WithMany("CursoMateriasNotas")
                         .HasForeignKey("CursoId");
+
+                    b.HasOne("CursoMaterias", null)
+                        .WithMany("CursoMateriasNotas")
+                        .HasForeignKey("CursoMateriasId");
 
                     b.HasOne("Estudiante", null)
                         .WithMany("CursoMateriasNotas")
@@ -617,6 +652,11 @@ namespace RegistroNotas.Migrations
             modelBuilder.Entity("CatalogoDesarrollo", b =>
                 {
                     b.Navigation("CatalogoCurricular");
+                });
+
+            modelBuilder.Entity("CursoMaterias", b =>
+                {
+                    b.Navigation("CursoMateriasNotas");
                 });
 
             modelBuilder.Entity("Estudiante", b =>

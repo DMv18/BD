@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DBcontext>(o => o.UseSqlServer("Server=.;Database=BD;User Id=David;Password=Contrasena123;TrustServerCertificate=True;"));
+builder.Services.AddDbContext<DBcontext>(o => o.UseSqlServer("Server=.;Database=Prueba;User Id=sa;Password=q34XU!BY9nwmaQE;TrustServerCertificate=True;"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

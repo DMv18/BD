@@ -27,4 +27,3 @@ public class Docente{
     [MaxLength(50)]
     public bool Activo { get; set; }
 }
-

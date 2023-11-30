@@ -5,7 +5,7 @@
 namespace RegistroNotas.Migrations
 {
     /// <inheritdoc />
-    public partial class Docente : Migration
+    public partial class CursoMateriasNotas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,26 +18,33 @@ namespace RegistroNotas.Migrations
                 defaultValue: 0);
 
             migrationBuilder.CreateTable(
-                name: "Docente",
+                name: "CursoMateriasNotas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Primer_Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Segundo_Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Primer_Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Segundo_Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Activo = table.Column<bool>(type: "bit", nullable: false)
+                    Nota = table.Column<decimal>(type: "decimal(4,2)", nullable: false),
+                    CursoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Docente", x => x.Id);
+                    table.PrimaryKey("PK_CursoMateriasNotas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CursoMateriasNotas_Cursos_CursoId",
+                        column: x => x.CursoId,
+                        principalTable: "Cursos",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cursos_DocenteId",
                 table: "Cursos",
                 column: "DocenteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CursoMateriasNotas_CursoId",
+                table: "CursoMateriasNotas",
+                column: "CursoId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Cursos_Docente_DocenteId",
@@ -56,7 +63,7 @@ namespace RegistroNotas.Migrations
                 table: "Cursos");
 
             migrationBuilder.DropTable(
-                name: "Docente");
+                name: "CursoMateriasNotas");
 
             migrationBuilder.DropIndex(
                 name: "IX_Cursos_DocenteId",
