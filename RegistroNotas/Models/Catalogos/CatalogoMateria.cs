@@ -14,7 +14,8 @@ public class CatalogoMateria
     public string Descripcion { get; set; } = null!;
 
     public bool Activo { get; set; }
+
     public int Parciales { get; set; }
-    public Docente Docente { get; set; }= null!;
+
     public CatalogoCurricular CatalogoCurricular { get; set; }= null!;
 }

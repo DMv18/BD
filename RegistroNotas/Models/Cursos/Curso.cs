@@ -21,6 +21,6 @@ public class Curso
     public Docente Docente { get; set; } = null!;
 
     public List<Estudiante> Estudiantes { get; set; } = null!;
-    public List<CursoMateriaNota> CursoMateriasNotas { get; set; } = null!;
+
     public List<CursoMateria> CursoMaterias { get; set; } = null!;
 }

@@ -290,17 +290,12 @@ namespace RegistroNotas.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("DocenteId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Parciales")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CatalogoCurricularId");
-
-                    b.HasIndex("DocenteId");
 
                     b.ToTable("CatalogoMateria");
                 });
@@ -421,7 +416,10 @@ namespace RegistroNotas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CursoId")
+                    b.Property<int?>("CursoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DocenteId")
                         .HasColumnType("int");
 
                     b.Property<int>("MateriaId")
@@ -430,6 +428,8 @@ namespace RegistroNotas.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CursoId");
+
+                    b.HasIndex("DocenteId");
 
                     b.HasIndex("MateriaId");
 
@@ -444,10 +444,7 @@ namespace RegistroNotas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CursoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CursoMateriaId")
+                    b.Property<int?>("CursoMateriaId")
                         .HasColumnType("int");
 
                     b.Property<int>("EstudianteId")
@@ -457,8 +454,6 @@ namespace RegistroNotas.Migrations
                         .HasColumnType("decimal(4,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
 
                     b.HasIndex("CursoMateriaId");
 
@@ -574,15 +569,7 @@ namespace RegistroNotas.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RegistroNotas.Models.Catalogos.Docente", "Docente")
-                        .WithMany()
-                        .HasForeignKey("DocenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("CatalogoCurricular");
-
-                    b.Navigation("Docente");
                 });
 
             modelBuilder.Entity("RegistroNotas.Models.Cursos.Curso", b =>
@@ -614,9 +601,13 @@ namespace RegistroNotas.Migrations
 
             modelBuilder.Entity("RegistroNotas.Models.Cursos.CursoMateria", b =>
                 {
-                    b.HasOne("RegistroNotas.Models.Cursos.Curso", "Curso")
+                    b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
                         .WithMany("CursoMaterias")
-                        .HasForeignKey("CursoId")
+                        .HasForeignKey("CursoId");
+
+                    b.HasOne("RegistroNotas.Models.Catalogos.Docente", "Docente")
+                        .WithMany()
+                        .HasForeignKey("DocenteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -626,34 +617,22 @@ namespace RegistroNotas.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Curso");
+                    b.Navigation("Docente");
 
                     b.Navigation("Materia");
                 });
 
             modelBuilder.Entity("RegistroNotas.Models.Cursos.CursoMateriaNota", b =>
                 {
-                    b.HasOne("RegistroNotas.Models.Cursos.Curso", "Curso")
-                        .WithMany("CursoMateriasNotas")
-                        .HasForeignKey("CursoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RegistroNotas.Models.Cursos.CursoMateria", "CursoMateria")
-                        .WithMany()
-                        .HasForeignKey("CursoMateriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("RegistroNotas.Models.Cursos.CursoMateria", null)
+                        .WithMany("CursoMateriaNotas")
+                        .HasForeignKey("CursoMateriaId");
 
                     b.HasOne("RegistroNotas.Models.Estudiantes.Estudiante", "Estudiante")
                         .WithMany("CursoMateriasNotas")
                         .HasForeignKey("EstudianteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Curso");
-
-                    b.Navigation("CursoMateria");
 
                     b.Navigation("Estudiante");
                 });
@@ -674,9 +653,12 @@ namespace RegistroNotas.Migrations
                 {
                     b.Navigation("CursoMaterias");
 
-                    b.Navigation("CursoMateriasNotas");
-
                     b.Navigation("Estudiantes");
+                });
+
+            modelBuilder.Entity("RegistroNotas.Models.Cursos.CursoMateria", b =>
+                {
+                    b.Navigation("CursoMateriaNotas");
                 });
 
             modelBuilder.Entity("RegistroNotas.Models.Estudiantes.Estudiante", b =>

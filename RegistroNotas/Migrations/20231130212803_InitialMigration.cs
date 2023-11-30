@@ -278,7 +278,6 @@ namespace RegistroNotas.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Activo = table.Column<bool>(type: "bit", nullable: false),
                     Parciales = table.Column<int>(type: "int", nullable: false),
-                    DocenteId = table.Column<int>(type: "int", nullable: false),
                     CatalogoCurricularId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -288,12 +287,6 @@ namespace RegistroNotas.Migrations
                         name: "FK_CatalogoMateria_CatalogoCurricular_CatalogoCurricularId",
                         column: x => x.CatalogoCurricularId,
                         principalTable: "CatalogoCurricular",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CatalogoMateria_Docente_DocenteId",
-                        column: x => x.DocenteId,
-                        principalTable: "Docente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -327,8 +320,9 @@ namespace RegistroNotas.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CursoId = table.Column<int>(type: "int", nullable: false),
-                    MateriaId = table.Column<int>(type: "int", nullable: false)
+                    DocenteId = table.Column<int>(type: "int", nullable: false),
+                    MateriaId = table.Column<int>(type: "int", nullable: false),
+                    CursoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -343,6 +337,11 @@ namespace RegistroNotas.Migrations
                         name: "FK_CursoMaterias_Cursos_CursoId",
                         column: x => x.CursoId,
                         principalTable: "Cursos",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CursoMaterias_Docente_DocenteId",
+                        column: x => x.DocenteId,
+                        principalTable: "Docente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -354,9 +353,8 @@ namespace RegistroNotas.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nota = table.Column<decimal>(type: "decimal(4,2)", nullable: false),
-                    CursoId = table.Column<int>(type: "int", nullable: false),
-                    CursoMateriaId = table.Column<int>(type: "int", nullable: false),
-                    EstudianteId = table.Column<int>(type: "int", nullable: false)
+                    EstudianteId = table.Column<int>(type: "int", nullable: false),
+                    CursoMateriaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -365,14 +363,7 @@ namespace RegistroNotas.Migrations
                         name: "FK_CursoMateriasNotas_CursoMaterias_CursoMateriaId",
                         column: x => x.CursoMateriaId,
                         principalTable: "CursoMaterias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CursoMateriasNotas_Cursos_CursoId",
-                        column: x => x.CursoId,
-                        principalTable: "Cursos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CursoMateriasNotas_Estudiantes_EstudianteId",
                         column: x => x.EstudianteId,
@@ -431,24 +422,19 @@ namespace RegistroNotas.Migrations
                 column: "CatalogoCurricularId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CatalogoMateria_DocenteId",
-                table: "CatalogoMateria",
-                column: "DocenteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CursoMaterias_CursoId",
                 table: "CursoMaterias",
                 column: "CursoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CursoMaterias_DocenteId",
+                table: "CursoMaterias",
+                column: "DocenteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CursoMaterias_MateriaId",
                 table: "CursoMaterias",
                 column: "MateriaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CursoMateriasNotas_CursoId",
-                table: "CursoMateriasNotas",
-                column: "CursoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CursoMateriasNotas_CursoMateriaId",

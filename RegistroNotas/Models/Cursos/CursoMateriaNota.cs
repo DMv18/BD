@@ -14,9 +14,5 @@ public class CursoMateriaNota
     [Column(TypeName = "decimal(4,2)")]
     public decimal Nota { get; set; }
 
-    public Curso Curso { get; set; } = null!;
-
-    public CursoMateria CursoMateria { get; set; } = null!;
-
     public Estudiante Estudiante { get; set; } = null!;
 }
