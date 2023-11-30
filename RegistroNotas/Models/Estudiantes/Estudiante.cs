@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using RegistroNotas.Migrations;
+using RegistroNotas.Models.Cursos;
+
+namespace RegistroNotas.Models.Estudiantes;
 
 [Table("Estudiantes")]
-
-public class Estudiante{
+public class Estudiante
+{
     [Key]
     public int Id { get; set; }
 
@@ -23,8 +25,7 @@ public class Estudiante{
     [Required]
     [MaxLength(50)]
     public string Segundo_Apellido { get; set; } = null!;
-    public bool Activo { get; set; }
-    public required List<CursoMateriasNotas> CursoMateriasNotas { get; set; }
-    
 
+    public bool Activo { get; set; }
+    public required List<CursoMateriaNota> CursoMateriasNotas { get; set; }
 }
