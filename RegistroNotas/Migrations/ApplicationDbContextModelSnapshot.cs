@@ -22,222 +22,6 @@ namespace RegistroNotas.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-<<<<<<< HEAD
-            modelBuilder.Entity("CatalogoCurricular", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("CatalogoDesarrolloId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CatalogoDesarrolloId");
-
-                    b.ToTable("CatalogoCurricular");
-                });
-
-            modelBuilder.Entity("CatalogoDesarrollo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CatalogoDesarrollo");
-                });
-
-            modelBuilder.Entity("CatalogoMateria", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("CatalogoCurricularId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("DocenteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Parciales")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CatalogoCurricularId");
-
-                    b.HasIndex("DocenteId");
-
-                    b.ToTable("CatalogoMateria");
-                });
-
-            modelBuilder.Entity("CursoMaterias", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CatalogoMateriaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CursoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CatalogoMateriaId");
-
-                    b.HasIndex("CursoId");
-
-                    b.ToTable("CursoMaterias");
-                });
-
-            modelBuilder.Entity("CursoMateriasNotas", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CursoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CursoMateriasId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EstudianteId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Nota")
-                        .HasColumnType("decimal(4,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
-
-                    b.HasIndex("CursoMateriasId");
-
-                    b.HasIndex("EstudianteId");
-
-                    b.ToTable("CursoMateriasNotas");
-                });
-
-            modelBuilder.Entity("Docente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Activo")
-                        .HasMaxLength(50)
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Primer_Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Primer_Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Segundo_Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Segundo_Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Docente");
-                });
-
-            modelBuilder.Entity("Estudiante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("CursoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Primer_Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Primer_Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Segundo_Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Segundo_Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
-
-                    b.ToTable("Estudiantes");
-                });
-
-=======
->>>>>>> 616ce103eaa37f8f999e66209a536b29e3d1760e
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -654,23 +438,6 @@ namespace RegistroNotas.Migrations
 
             modelBuilder.Entity("RegistroNotas.Models.Cursos.CursoMateriaNota", b =>
                 {
-<<<<<<< HEAD
-                    b.HasOne("CatalogoCurricular", "CatalogoCurricular")
-                        .WithMany()
-                        .HasForeignKey("CatalogoCurricularId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Docente", "Docente")
-                        .WithMany()
-                        .HasForeignKey("DocenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CatalogoCurricular");
-
-                    b.Navigation("Docente");
-=======
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
@@ -698,45 +465,18 @@ namespace RegistroNotas.Migrations
                     b.HasIndex("EstudianteId");
 
                     b.ToTable("CursoMateriasNotas");
->>>>>>> 616ce103eaa37f8f999e66209a536b29e3d1760e
                 });
 
             modelBuilder.Entity("RegistroNotas.Models.Estudiantes.Estudiante", b =>
                 {
-<<<<<<< HEAD
-                    b.HasOne("CatalogoMateria", "CatalogoMateria")
-                        .WithMany()
-                        .HasForeignKey("CatalogoMateriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RegistroNotas.Models.Cursos.Curso", null)
-                        .WithMany("CursoMaterias")
-                        .HasForeignKey("CursoId");
-
-                    b.Navigation("CatalogoMateria");
-                });
-=======
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
->>>>>>> 616ce103eaa37f8f999e66209a536b29e3d1760e
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-<<<<<<< HEAD
-                    b.HasOne("CursoMaterias", null)
-                        .WithMany("CursoMateriasNotas")
-                        .HasForeignKey("CursoMateriasId");
-
-                    b.HasOne("Estudiante", null)
-                        .WithMany("CursoMateriasNotas")
-                        .HasForeignKey("EstudianteId");
-                });
-=======
                     b.Property<bool>("Activo")
                         .HasColumnType("bit");
->>>>>>> 616ce103eaa37f8f999e66209a536b29e3d1760e
 
                     b.Property<int?>("CursoId")
                         .HasColumnType("int");
@@ -891,16 +631,7 @@ namespace RegistroNotas.Migrations
                     b.Navigation("Materia");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("CursoMaterias", b =>
-                {
-                    b.Navigation("CursoMateriasNotas");
-                });
-
-            modelBuilder.Entity("Estudiante", b =>
-=======
             modelBuilder.Entity("RegistroNotas.Models.Cursos.CursoMateriaNota", b =>
->>>>>>> 616ce103eaa37f8f999e66209a536b29e3d1760e
                 {
                     b.HasOne("RegistroNotas.Models.Cursos.Curso", "Curso")
                         .WithMany("CursoMateriasNotas")

@@ -20,13 +20,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Predeterminada", policy => policy.RequireAuthenticatedUser());
-    options.AddPolicy("Administrador", policy => policy.RequireAuthenticatedUser().RequireRole("Administrador"));
-    options.AddPolicy("Docente", policy => policy.RequireAuthenticatedUser().RequireRole("Docente"));
-    options.AddPolicy("Estudiante", policy => policy.RequireAuthenticatedUser().RequireRole("Estudiante"));
-});
+builder.Services.AddAuthorizationBuilder()
+    .AddDefaultPolicy("Predeterminada", policy => policy.RequireAuthenticatedUser())
+    .AddPolicy("Administrador", policy => policy.RequireAuthenticatedUser().RequireRole("Administrador"))
+    .AddPolicy("Docente", policy => policy.RequireAuthenticatedUser().RequireRole("Docente"))
+    .AddPolicy("Estudiante", policy => policy.RequireAuthenticatedUser().RequireRole("Estudiante"));
+
 
 var app = builder.Build();
 

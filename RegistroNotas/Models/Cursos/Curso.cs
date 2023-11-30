@@ -17,6 +17,7 @@ public class Curso
     public Periodo Periodo { get; set; } = null!;
 
     public Modalidad Modalidad { get; set; } = null!;
+
     public Docente Docente { get; set; } = null!;
 
     public List<Estudiante> Estudiantes { get; set; } = null!;

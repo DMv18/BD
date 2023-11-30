@@ -14,11 +14,6 @@ public class CatalogoDesarrollo
     public string Descripcion { get; set; } = null!;
 
     public bool Activo { get; set; }
-<<<<<<< HEAD
-    public List<CatalogoCurricular> CatalogoCurricular { get; set; } = null!;
-   
-=======
 
     public List<CatalogoCurricular> CatalogoCurricular { get; set; } = new();
->>>>>>> 616ce103eaa37f8f999e66209a536b29e3d1760e
 }
