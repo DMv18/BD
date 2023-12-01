@@ -9,6 +9,7 @@ public class CursoMateriaNota
 {
     [Key]
     public int Id { get; set; }
+    public int Parcial { get; set; }
 
     [Required]
     [Column(TypeName = "decimal(4,2)")]
