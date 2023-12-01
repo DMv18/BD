@@ -53,4 +53,20 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+
+await Seed(app);
 app.Run();
+
+async Task Seed(IApplicationBuilder target)
+{
+    using var services = target.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope();
+    if (services is null) return;
+    var roleManager = services.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    if (!await roleManager.Roles.AnyAsync(role => role.Name == "Administrador"))
+        await roleManager.CreateAsync(new IdentityRole { Name = "Administrador" });
+    if (!await roleManager.Roles.AnyAsync(role => role.Name == "Docente"))
+        await roleManager.CreateAsync(new IdentityRole { Name = "Docente" });
+    if (!await roleManager.Roles.AnyAsync(role => role.Name == "Estudiante"))
+        await roleManager.CreateAsync(new IdentityRole { Name = "Estudiante" });
+}
